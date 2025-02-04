@@ -26,9 +26,7 @@ jobs:
           latexmk_use_lualatex: true
           continue_on_error: true
           extra_fonts: |
-            /usr/share/fonts/truetype/msttcorefonts/Arial.ttf
             /usr/share/fonts/truetype/firacode/FiraCode-Regular.ttf
-          extra_system_packages: "fonts-firacode"
       - name: Commit and push PDF
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
