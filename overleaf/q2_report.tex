@@ -1,0 +1,105 @@
+% !TEX TS-program = xelatex
+% !BIB TS-program = bibtex
+\documentclass[12pt,letterpaper]{article}
+\usepackage{style/dsc180reportstyle} % import dsc180reportstyle.sty
+\newcommand{\lmul}{$\mathcal{L}$-Mul\xspace}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Title and Authors
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Designing an Energy-Efficient Hardware Accelerator for Deep Learning}
+
+\author{Kai Breese \\
+  {\tt kbreese@ucsd.edu} \\\And
+  Lukas Fullner \\
+  {\tt lfullner@ucsd.edu} \\\And
+  Justin Chou \\
+  {\tt jtchou@ucsd.edu} \\\And
+  Katelyn Abille \\
+  {\tt kabille@ucsd.edu} \\\And
+  Rajesh Gupta \\
+  {\tt rgupta@ucsd.edu} \\}
+
+\begin{document}
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Abstract and Links
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{abstract}
+    
+Efficient floating point operations are a significant challenge in large neural networks and other computationally intensive machine learning algorithms, where energy consumption and latency are key constraints. In this report, we present an implementation of the linear-complexity multiplication (\lmul) algorithm designed to approximate floating point multiplication using addition \citep{luo2024addition}. By leveraging this approximation, \lmul achieves high precision with significantly lower computational cost than traditional floating point multiplication methods.  Our goal with this project is to develop a working simulation of a processor which can run machine learning models such as a multilayer perception or a transformer.  The core of this processor will be a matrix multiplication module using the \lmul algorithm in order to achieve faster and more efficient processing of machine learning models.
+    
+\end{abstract}
+
+\begin{center}
+Website: \url{https://abc.github.io/} \\
+Code: \url{https://github.com/ninjakaib/hardware-accelerators}
+\end{center}
+
+\maketoc
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Main Contents
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introduction}
+In quarter 1 we utilized various implementation methods in order to get a working version of the \lmul algorithm.  Utilizing PyRTL and Vivado, we first implemented the \lmul algorithm, and then developed a systolic array utilizing the \lmul module.  Through this process we studied various data formats as the key to the \lmul algorithm is exploiting a property of floating point numbers.  We started with keeping our data in an eight-bit float as this was the data format that the algorithm was shown to work on, but we also had to consider that most machine learning models are not run on fp8, and so the process of converting the models to fp8 would add additional overhead that we would like to avoid.  This lead us to the bf16 format, which was easier to convert to and from while still being usable in our algorithm.  All of this research into the \lmul algorithm lead us to the central problem that we are trying to solve, that the greatest slowdown of processing a machine learning model is the multiplication step, so by accelerating the multiplication we would gain a noticeable speedup in model performance.  Our quarter 1 project allowed us to perform a deep dive into various ways of writing Verilog code, using PyRTL and writing Verilog directly.  We learned much about both the syntax of design as well as the logic that goes into designing a circuit or module.  This led to us developing our workflow, and determining how we can most efficiently create code.
+
+This leads us to our goal for quarter 2, to develop and simulate an accelerator for machine learning models.  We will be using PyRTL to construct our hardware, which will take the form of a processor with its own instruction set and series of compute modules.  By basing the multiply off of \lmul, we will be able to run actual machine learning models (A pytorch or ONYX model) on our processor, and will be able to benchmark performance to see if the \lmul based multiply is practical.  We will also develop a comprehensive testing suite for our processor, both to display the performance of the processor but also to allow us to optimize various hyperparameters of the design by using the performance data we generate.  In essence we will perform data science on our model, generating data about its performance so we can further optimize the performance.  
+
+
+
+\section{Methods}
+
+\section{Results}
+
+% \section{Discussion}
+
+\section{Conclusion}
+
+\section{Contributions}
+
+Kai Breese contributed ...
+
+Lukas Fullner contributed...
+
+Justin Chou contributed ...
+
+Katelyn Abille contributed ...
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Reference / Bibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\makereference
+
+\bibliography{reference}
+\bibliographystyle{style/dsc180bibstyle}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Appendix
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\clearpage
+\makeappendix
+
+\subsection{Project Proposal}
+
+Efficient floating point operations are a significant challenge in large neural networks and other computationally intensive machine learning algorithms, where energy consumption and latency are key constraints. In this report, we present an implementation of the linear-complexity multiplication (\lmul) algorithm designed to approximate floating point multiplication using addition \citep{luo2024addition}. By leveraging this approximation, \lmul achieves high precision with significantly lower computational cost than traditional floating point multiplication methods.  Our goal with this project is to develop a working simulation of a processor which can run machine learning models such as a multilayer perception or a transformer.  The core of this processor will be a matrix multiplication module using the \lmul algorithm in order to achieve faster and more efficient processing of machine learning models.
+
+In quarter 1 we utilized various implementation methods in order to get a working version of the \lmul algorithm.  Utilizing PyRTL and Vivado, we first implemented the \lmul algorithm, and then developed a systolic array utilizing the \lmul module.  Through this process we studied various data formats as the key to the \lmul algorithm is exploiting a property of floating point numbers.  We started with keeping our data in an eight-bit float as this was the data format that the algorithm was shown to work on, but we also had to consider that most machine learning models are not run on fp8, and so the process of converting the models to fp8 would add additional overhead that we would like to avoid.  This lead us to the bf16 format, which was easier to convert to and from while still being usable in our algorithm.  All of this research into the \lmul algorithm lead us to the central problem that we are trying to solve, that the greatest slowdown of processing a machine learning model is the multiplication step, so by accelerating the multiplication we would gain a noticeable speedup in model performance.  Our quarter 1 project allowed us to perform a deep dive into various ways of writing Verilog code, using PyRTL and writing Verilog directly.  We learned much about both the syntax of design as well as the logic that goes into designing a circuit or module.  This led to us developing our workflow, and determining how we can most efficiently create code.
+
+This leads us to our goal for quarter 2, to develop and simulate an accelerator for machine learning models.  We will be using PyRTL to construct our hardware, which will take the form of a processor with its own instruction set and series of compute modules.  By basing the multiply off of \lmul, we will be able to run actual machine learning models (A pytorch or ONYX model) on our processor, and will be able to benchmark performance to see if the \lmul based multiply is practical.  We will also develop a comprehensive testing suite for our processor, both to display the performance of the processor but also to allow us to optimize various hyperparameters of the design by using the performance data we generate.  In essence we will perform data science on our model, generating data about its performance so we can further optimize the performance.  
+
+% \subsection{Additional Figures}
+
+% \subsection{Additional Tables}
+
+
+\end{document}

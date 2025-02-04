@@ -19,8 +19,8 @@ jobs:
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: main.tex
-          working_directory: reports/
+          root_file: q1_report.tex
+          working_directory: overleaf/
           work_in_root_file_dir: true
           latexmk_use_lualatex: true
           continue_on_error: true
@@ -32,7 +32,7 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add reports/main.pdf
+          git add overleaf/q1_report.pdf
           git commit -m "Update report PDF" || echo "No changes to commit"
           git push
         env:
@@ -41,5 +41,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: research-paper
-          path: reports/main.pdf
+          path: overleaf/q1_report.pdf
           if-no-files-found: error
