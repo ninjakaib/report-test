@@ -25,10 +25,7 @@ jobs:
           work_in_root_file_dir: true
           latexmk_use_lualatex: true
           continue_on_error: true
-          pre_compile: "tlmgr update --self && tlmgr update --all"
-          post_compile:
-          # extra_fonts: |
-          #   /usr/share/fonts/truetype/firacode/FiraCode-Regular.ttf
+          extra_system_packages: "ttf-mscorefonts-installer"
       - name: Commit and push PDF
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
